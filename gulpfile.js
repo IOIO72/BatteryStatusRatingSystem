@@ -1,25 +1,18 @@
 'use strict';
 
-var gulp = require('gulp');
-var jade = require('gulp-jade');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var gulpCopy = require('gulp-copy');
-var cleanDest = require('gulp-clean-dest');
-var livereload = require('gulp-livereload');
-
-var livereloadoptions = {
-    start: true,
-    port: 9002,
-    basePath: './build/',
-    reloadPage: 'index.html'
-};
+var gulp = require('gulp'),
+    jade = require('gulp-jade'),
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    gulpCopy = require('gulp-copy'),
+    cleanDest = require('gulp-clean-dest'),
+    browserSync = require('browser-sync'),
+    reload = browserSync.reload;
 
 gulp.task('copy:bower', function () {
     gulp.src([
         './bower_components/jquery/dist/jquery.min.js'
     ])
-        .pipe(cleanDest('./source/js/vendor'))
         .pipe(gulpCopy('./source/js/vendor', {prefix: 3}))
 });
 
@@ -40,7 +33,6 @@ gulp.task('templates', function () {
         }))
         .pipe(cleanDest('./build/'))
         .pipe(gulp.dest('./build/'))
-        .pipe(livereload(livereloadoptions))
 });
 
 gulp.task('sass', function () {
@@ -50,24 +42,46 @@ gulp.task('sass', function () {
         .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./build/css'))
-        .pipe(livereload(livereloadoptions))
+});
+
+gulp.task('watch:jade', function () {
+    var watchJS = gulp.watch('source/jade/**/*.jade', ['templates']);
+    watchJS.on('change', function (event) {
+        console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    });
 });
 
 gulp.task('watch:js', function () {
-    var watchJS = gulp.watch('.source/js/**/*.js', ['copy']);
+    var watchJS =
     watchJS.on('change', function (event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
 });
 
 gulp.task('watch:sass', function () {
-    var watchSASS = gulp.watch('./source/sass/**/*.scss', ['sass']);
+    var watchSASS = gulp.watch('source/sass/**/*.scss', ['sass']);
     watchSASS.on('change', function (event) {
         console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
 });
 
+gulp.task('serve', ['copy:bower', 'copy', 'templates', 'sass'], function () {
+    browserSync({
+        notify: false,
+        server: {
+            baseDir: ['build'],
+            routes: {
+                '/bower_components': 'bower_components'
+            }
+        }
+    });
+    gulp.watch('source/jade/**/*.jade', ['templates', reload]);
+    gulp.watch('source/js/**/*.js', ['copy', reload]);
+    gulp.watch('source/sass/**/*.{scss,sass}', ['sass', reload]);
+});
+
 gulp.task('watch', [
+        'watch:jade',
         'watch:js',
         'watch:sass'
     ]
