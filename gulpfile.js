@@ -1,10 +1,19 @@
 'use strict';
 
 var gulp = require('gulp');
-var sass = require('gulp-sass');
 var jade = require('gulp-jade');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 var gulpCopy = require('gulp-copy');
 var cleanDest = require('gulp-clean-dest');
+var livereload = require('gulp-livereload');
+
+var livereloadoptions = {
+    start: true,
+    port: 9002,
+    basePath: './build/',
+    reloadPage: 'index.html'
+};
 
 gulp.task('copy:bower', function () {
     gulp.src([
@@ -31,13 +40,17 @@ gulp.task('templates', function () {
         }))
         .pipe(cleanDest('./build/'))
         .pipe(gulp.dest('./build/'))
+        .pipe(livereload(livereloadoptions))
 });
 
 gulp.task('sass', function () {
     gulp.src('./source/sass/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
         .pipe(cleanDest('./build/css'))
-        .pipe(gulp.dest('./build/css'));
+        .pipe(sourcemaps.init())
+        .pipe(sass().on('error', sass.logError))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest('./build/css'))
+        .pipe(livereload(livereloadoptions))
 });
 
 gulp.task('watch:js', function () {

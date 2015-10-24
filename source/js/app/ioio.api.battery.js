@@ -240,7 +240,7 @@ window.batteryStatus = {
                 var _TimeLevel = this.getBatteryDischargingTime();
                 if (!$.isNumeric(_TimeLevel)) {
                     _TimeLevel = this.getBatteryChargingTime();
-                };
+                }
             }
             if (!$.isNumeric(_TimeLevel)) return false;
             $.each(batteryStatus.Config.TimeLevel, function(_className, _arrRange) {
@@ -248,13 +248,13 @@ window.batteryStatus = {
                     if (_TimeLevel >= _arrRange[0] && _TimeLevel <= _arrRange[1]) {
                         _LevelName = _className;
                         return false;
-                    };
+                    }
                 } else {
                     if (_TimeLevel >= _arrRange[0]) {
                         _LevelName = _className;
                         return false;
                     }
-                };
+                }
             });
             return _LevelName;
         },
