@@ -1,5 +1,5 @@
 {
-  "name": "battery-status-api",
+  "name": "battery-status-rating-system",
   "description": "This module uses the Battery Status API (https://dvcs.w3.org/hg/dap/raw-file/default/battery/Overview.html) to handle battery status events, interpret the status of the battery conditions and set the interpretation and data to html body.",
   "main": "source/js/app/ioio.api.battery.js",
   "authors": [
