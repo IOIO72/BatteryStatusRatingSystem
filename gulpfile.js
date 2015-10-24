@@ -52,8 +52,9 @@ gulp.task('sass', function () {
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
+            browsers: ['> 1%', 'Firefox > 4', 'Safari > 4', 'Opera > 4'],
+            cascade: false,
+            add: true
         }))
         .pipe(csslint())
         .pipe(csslint.reporter('text'))

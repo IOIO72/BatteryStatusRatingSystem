@@ -5,20 +5,28 @@
 window.batteryStatus = {
 
     Config: {
+
+        // The percentage of the battery energy levels classified by sections.
+        // Label names and ranges can be customized.
         EnergyLevel: {
-            critical:	[0		,	0.05],
-            low:		[0.06	,	0.15],
-            okay:		[0.16	,	0.5],
-            high:		[0.51	,	0.8],
-            full:		[0.81	,	1]
+            critical:	[0		, 0.05], // 0% to 5%
+            low:		[0.06	, 0.15], // 6% to 15%
+            okay:		[0.16	, 0.5], // etc.
+            high:		[0.51	, 0.8],
+            full:		[0.81	, 1]
         },
+
+        // Time level classification for charging and discharging times.
+        // Label names and ranges can be customized.
         TimeLevel: {
-            verylittle: [0		,	300],
-            little:		[301	,	1800],
-            normal:		[1801	, 3600],
+            verylittle: [0		, 300], // 0 to 5 minutes (300 seconds)
+            little:		[301	, 1800], // 5.1 to 30 minutes (1800 seconds)
+            normal:		[1801	, 3600], // etc.
             much:		[3601	, 7200],
             verymuch:	[7201	, 'Infinity']
         },
+
+        // Rating classification by combinations of energy and time levels from above.
         EnergyRating: {
             best: {
                 EnergyLevels:	['full'],
@@ -42,10 +50,14 @@ window.batteryStatus = {
             }
         },
         DefaultRatingWhileCharging: 'charging',
+
+        // Labels for charging state
         BatteryCharge: {
             charging: "charging",
             discharging: "discharging"
         },
+
+        // HTML5 data attribute labels
         Data: {
             classification: {
                 batterylevelperc:		'bat-percent',
@@ -280,6 +292,8 @@ window.batteryStatus = {
     },
 
     Widget: {
+
+        // Battery widget, which contains the percentage level
         BatterySymbol: {
             init: function() {
                 this.$batterySymbol = $('.battery');
@@ -293,6 +307,8 @@ window.batteryStatus = {
                 $(this.$batterySymbol).html(batteryStatus.Controller.getEnergyLevelPercentage());
             }
         },
+
+        // Battery widget with javascript generated background gradient to represent the energy level.
         BatteryFillSymbol: {
             init: function() {
                 this.$batteryFillSymbol = $('.battery_js');
@@ -313,6 +329,7 @@ window.batteryStatus = {
                 ;
             }
         }
+
     },
 
     init: function() {
