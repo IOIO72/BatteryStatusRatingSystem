@@ -237,7 +237,7 @@ window.batteryStatus = {
             var _TimeLevel = timelevel || null,
                 _LevelName = false;
             if (_TimeLevel === null) {
-                var _TimeLevel = this.getBatteryDischargingTime();
+                _TimeLevel = this.getBatteryDischargingTime();
                 if (!$.isNumeric(_TimeLevel)) {
                     _TimeLevel = this.getBatteryChargingTime();
                 }
@@ -264,10 +264,10 @@ window.batteryStatus = {
             var _LevelName = false,
                 _EnergyLevelName = this.getEnergyLevelName(),
                 _TimeLevelName = this.getTimeLevelName(this.getBatteryDischargingTime());
-            if (_EnergyLevelName == false) {batteryStatus.View.showLog('<b>Energy Level: ' + _EnergyLevelName + '</b>', 'warn')} // debug
-            if (_TimeLevelName == false) {batteryStatus.View.showLog('<b>Time Level: ' + _TimeLevelName + '</b>', 'warn')} // debug
+            if (_EnergyLevelName === false) {batteryStatus.View.showLog('<b>Energy Level: ' + _EnergyLevelName + '</b>', 'warn');} // debug
+            if (_TimeLevelName === false) {batteryStatus.View.showLog('<b>Time Level: ' + _TimeLevelName + '</b>', 'warn');} // debug
             $.each(batteryStatus.Config.EnergyRating, function(_className, _arrNames) {
-                if (($.inArray(_EnergyLevelName, _arrNames.EnergyLevels) > -1) && ((_TimeLevelName == false) || ($.inArray(_TimeLevelName, _arrNames.TimeLevels) > -1))) {
+                if (($.inArray(_EnergyLevelName, _arrNames.EnergyLevels) > -1) && ((_TimeLevelName === false) || ($.inArray(_TimeLevelName, _arrNames.TimeLevels) > -1))) {
                     _LevelName = _className;
                     return false;
                 }

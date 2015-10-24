@@ -1,14 +1,15 @@
 'use strict';
 
-var gulp = require('gulp'),
-    jade = require('gulp-jade'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    sourcemaps = require('gulp-sourcemaps'),
-    gulpCopy = require('gulp-copy'),
-    cleanDest = require('gulp-clean-dest'),
-    browserSync = require('browser-sync'),
-    reload = browserSync.reload;
+var gulp            = require('gulp'),
+    jade            = require('gulp-jade'),
+    sass            = require('gulp-sass'),
+    autoprefixer    = require('gulp-autoprefixer'),
+    sourcemaps      = require('gulp-sourcemaps'),
+    gulpCopy        = require('gulp-copy'),
+    jshint          = require('gulp-jshint'),
+    cleanDest       = require('gulp-clean-dest'),
+    browserSync     = require('browser-sync'),
+    reload          = browserSync.reload;
 
 gulp.task('copy:bower', function () {
     gulp.src([
@@ -17,23 +18,25 @@ gulp.task('copy:bower', function () {
         .pipe(gulpCopy('./source/js/vendor', {prefix: 3}))
 });
 
-gulp.task('copy', function () {
+gulp.task('copy:js', function () {
     gulp.src([
-        './source/js/**/*'
+        './source/js/**/*.js'
     ])
-        .pipe(cleanDest('./build/js/'))
-        .pipe(gulpCopy('./build/js/', {prefix: 2}))
+        .pipe(cleanDest('./build/js'))
+        .pipe(gulpCopy('./build/js', {prefix: 2}))
+});
+
+gulp.task('lint', function() {
+    return gulp.src('./source/js/app/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
 });
 
 gulp.task('templates', function () {
-    var YOUR_LOCALS = {};
-
     gulp.src('./source/jade/*.jade')
-        .pipe(jade({
-            locals: YOUR_LOCALS
-        }))
-        .pipe(cleanDest('./build/'))
-        .pipe(gulp.dest('./build/'))
+        .pipe(cleanDest('./build'))
+        .pipe(jade())
+        .pipe(gulp.dest('./build'))
 });
 
 gulp.task('sass', function () {
@@ -49,15 +52,21 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('./build/css'))
 });
 
-gulp.task('default', [
+gulp.task('build', [
         'copy:bower',
-        'copy',
+        'copy:js',
         'templates',
         'sass'
     ]
 );
 
-gulp.task('serve', ['default'], function () {
+gulp.task('watch', ['build'], function () {
+    gulp.watch('source/jade/**/*.jade', ['templates']);
+    gulp.watch('source/js/**/*.js', ['copy:js', 'lint']);
+    gulp.watch('source/sass/**/*.{scss,sass}', ['sass']);
+});
+
+gulp.task('serve', ['build'], function () {
     browserSync({
         notify: false,
         server: {
@@ -68,6 +77,8 @@ gulp.task('serve', ['default'], function () {
         }
     });
     gulp.watch('source/jade/**/*.jade', ['templates', reload]);
-    gulp.watch('source/js/**/*.js', ['copy', reload]);
+    gulp.watch('source/js/**/*.js', ['copy:js', 'lint', reload]);
     gulp.watch('source/sass/**/*.{scss,sass}', ['sass', reload]);
 });
+
+gulp.task('default', ['watch']);
