@@ -1,0 +1,15 @@
+extends ./layouts/default
+block variables
+    - var title = "Battery Status API";
+
+block scripts
+    script(src='/js/app/ioio.api.battery.js')
+
+block content
+    h1 Battery Status API experiment
+    p <b>Alpha Version</b><br>You are welcome to report bugs or submit pull requests!
+    .battery BAT
+    .battery_js BAT
+    .chargestatus
+    .battery_fill &nbsp;
+    ol#log

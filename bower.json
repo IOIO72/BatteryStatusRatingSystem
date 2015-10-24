@@ -1,0 +1,27 @@
+{
+  "name": "battery-status-api",
+  "description": "This module uses the Battery Status API (https://dvcs.w3.org/hg/dap/raw-file/default/battery/Overview.html) to handle battery status events, interpret the status of the battery conditions and set the interpretation and data to html body.",
+  "main": "source/js/app/ioio.api.battery.js",
+  "authors": [
+    "Tamio Patrick Honma"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "api",
+    "battery",
+    "energy"
+  ],
+  "moduleType": [],
+  "homepage": "http://www.honma.de/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
