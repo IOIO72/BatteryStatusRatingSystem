@@ -2,9 +2,11 @@
 
 var gulp            = require('gulp'),
     jade            = require('gulp-jade'),
+    html5lint       = require('gulp-html5-lint'),
     sass            = require('gulp-sass'),
     autoprefixer    = require('gulp-autoprefixer'),
     sourcemaps      = require('gulp-sourcemaps'),
+    csslint         = require('gulp-csslint'),
     gulpCopy        = require('gulp-copy'),
     jshint          = require('gulp-jshint'),
     cleanDest       = require('gulp-clean-dest'),
@@ -16,6 +18,7 @@ gulp.task('copy:bower', function () {
         './bower_components/jquery/dist/jquery.min.js'
     ])
         .pipe(gulpCopy('./source/js/vendor', {prefix: 3}))
+    ;
 });
 
 gulp.task('copy:js', function () {
@@ -24,19 +27,23 @@ gulp.task('copy:js', function () {
     ])
         .pipe(cleanDest('./build/js'))
         .pipe(gulpCopy('./build/js', {prefix: 2}))
+    ;
 });
 
 gulp.task('lint', function() {
     return gulp.src('./source/js/app/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
+    ;
 });
 
 gulp.task('templates', function () {
     gulp.src('./source/jade/*.jade')
         .pipe(cleanDest('./build'))
         .pipe(jade())
+        .pipe(html5lint())
         .pipe(gulp.dest('./build'))
+    ;
 });
 
 gulp.task('sass', function () {
@@ -48,8 +55,11 @@ gulp.task('sass', function () {
             browsers: ['last 2 versions'],
             cascade: false
         }))
+        .pipe(csslint())
+        .pipe(csslint.reporter('text'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./build/css'))
+    ;
 });
 
 gulp.task('build', [
