@@ -1,6 +1,6 @@
 {
-  "name": "battery-status-api",
-  "version": "0.0.1",
+  "name": "battery-status-rating-system",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node app"
@@ -19,6 +19,7 @@
     "gulp-jade": "^1.1.0",
     "gulp-jshint": "^1.11.2",
     "gulp-sass": "*",
-    "gulp-sourcemaps": "^1.6.0"
+    "gulp-sourcemaps": "^1.6.0",
+    "marked": "^0.3.5"
   }
 }

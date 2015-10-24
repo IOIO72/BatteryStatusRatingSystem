@@ -1,15 +1,33 @@
 extends ./layouts/default
 block variables
-    - var title = "Battery Status API";
+    - var title = "Battery Status Rating System";
 
 block scripts
     script(src='/js/app/ioio.api.battery.js')
 
 block content
-    h1 Battery Status API experiment
     p <b>Alpha Version</b><br>You are welcome to report bugs or submit pull requests!
+
+    //
+        BatterySymbol widget (window.batteryStatus.Widget.BatterySymbol)
+        CSS used to display colors by status rating (see battery.scss)
+        JS is used to display the percentage value as number
     .battery BAT
+
+    //
+        BatteryFillSymbol widget (window.batteryStatus.Widget.BatteryFillSymbol)
+        JS is used to display the percentage value as background gradient
+        and as number
     .battery_js BAT
+
+    // CSS based display of charging state (see battery.scss)
     .chargestatus
+
+    // CSS based display of battery value as number and background gradient (see battery.scss)
     .battery_fill &nbsp;
+
+    // Log of state changes. Just remove the tag to remove the log.
     ol#log
+
+    article.log
+        include:markdown ../../README.md

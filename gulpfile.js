@@ -40,7 +40,7 @@ gulp.task('lint', function() {
 gulp.task('templates', function () {
     gulp.src('./source/jade/*.jade')
         .pipe(cleanDest('./build'))
-        .pipe(jade())
+        .pipe(jade({pretty:true}))
         .pipe(html5lint())
         .pipe(gulp.dest('./build'))
     ;
@@ -52,7 +52,7 @@ gulp.task('sass', function () {
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer({
-            browsers: ['> 1%', 'Firefox > 4', 'Safari > 4', 'Opera > 4'],
+            browsers: ['Chrome > 42', 'Firefox > 37', 'Safari > 9', 'Opera > 31'], // browser versions that support the API
             cascade: false,
             add: true
         }))

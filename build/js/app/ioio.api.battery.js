@@ -141,8 +141,10 @@ window.batteryStatus = {
             this.$body = $('body');
         },
         showLog: function(text, type) {
-            type = (type) ? type : 'log';
-            this.$log.prepend('<li class="' + type + '">' + text + '</li>');
+            if (this.$log.length > 0) {
+                type = (type) ? type : 'log';
+                this.$log.prepend('<li class="' + type + '">' + text + '</li>');
+            }
         },
         showBatteryStatus: function() {
             this.showBatteryLevel();

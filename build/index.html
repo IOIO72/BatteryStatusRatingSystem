@@ -1,1 +1,156 @@
-<!DOCTYPE html><html><head><title>IOIO - Battery Status API</title><script src="/js/vendor/jquery.min.js"></script><link rel="stylesheet" href="/css/battery.css"><script src="/js/app/ioio.api.battery.js"></script></head><body><h1>Battery Status API experiment</h1><p><b>Alpha Version</b><br>You are welcome to report bugs or submit pull requests!</p><div class="battery">BAT</div><div class="battery_js">BAT</div><div class="chargestatus"></div><div class="battery_fill">&nbsp;</div><ol id="log"></ol></body></html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IOIO - Battery Status Rating System</title>
+    <script src="/js/vendor/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/battery.css">
+    <script src="/js/app/ioio.api.battery.js"></script>
+  </head>
+  <body>
+    <p><b>Alpha Version</b><br>You are welcome to report bugs or submit pull requests!</p>
+    <!--
+    BatterySymbol widget (window.batteryStatus.Widget.BatterySymbol)
+    CSS used to display colors by status rating (see battery.scss)
+    JS is used to display the percentage value as number
+    -->
+    <div class="battery">BAT</div>
+    <!--
+    BatteryFillSymbol widget (window.batteryStatus.Widget.BatteryFillSymbol)
+    JS is used to display the percentage value as background gradient
+    and as number
+    -->
+    <div class="battery_js">BAT</div>
+    <!-- CSS based display of charging state (see battery.scss)-->
+    <div class="chargestatus"></div>
+    <!-- CSS based display of battery value as number and background gradient (see battery.scss)-->
+    <div class="battery_fill">&nbsp;</div>
+    <!-- Log of state changes. Just remove the tag to remove the log.-->
+    <ol id="log"></ol>
+    <article class="log"><h1 id="battery-status-rating-system">Battery Status Rating System</h1>
+<p><em>ioio.api.battery.js</em></p>
+<p>A javascript that writes the <strong>battery status</strong> and <strong>calculated ratings</strong> to the <em>data attributes</em> of the <em>body</em> tag.</p>
+<p>The script is based on the <a href="http://www.w3.org/TR/battery-status/">Battery Status API draft specification</a>
+which is supported by modern web browsers.</p>
+<p>Some browser implementations don&#39;t fully support the latest draft of the <em>Battery Status API specification</em>. The
+<em>Battery Status Rating System</em> script generally tries to cope with the different implementations, but compatibility to
+unfinished implementations is not the objective of this script.</p>
+<h1 id="possible-use-cases">Possible use cases</h1>
+<h2 id="critical-battery-status">Critical battery status</h2>
+<ul>
+<li>Reduce client side calculations, like heavy javascript algorithms, complex CSS layout renderings or animations.</li>
+<li>Reduce data transfers, like the frequency and volume of AJAX calls, unimportant data, already cached data, etc.</li>
+<li>Redirect to a light weight variation of your solution.</li>
+</ul>
+<h2 id="devices-in-charging-state">Devices in charging state</h2>
+<ul>
+<li>You can deliver more sophisticated features, which need more data transfer bandwidth and client side calculations.</li>
+<li>You can start synchronisation processes to save data into the offline storage.</li>
+<li>You can follow the hypothesis that the user is in a relaxed environment and would use other parts of your service than
+in on the go situations.</li>
+</ul>
+<h2 id="combined-data-and-more">Combined data and more</h2>
+<ul>
+<li>You may combine the <em>battery status rating system</em> data with more data, like geo location, acceleration sensor data,
+network mode and much more, to interpret the usage scenarios and adapt your service to them.</li>
+<li>You may have additional ideas.</li>
+</ul>
+<h1 id="documentation">Documentation</h1>
+<h2 id="data-attributes">Data attributes</h2>
+<p>The script adds the following HTML 5 data attributes into your body tag:</p>
+<pre><code class="lang-html">&lt;body data-bat-percent=&quot;95&quot; data-bat-level=&quot;full&quot; data-bat-charge=&quot;discharging&quot; data-bat-time-charging=&quot;false&quot;
+      data-bat-time-discharging=&quot;much&quot; data-bat-rating=&quot;good&quot;&gt;
+</code></pre>
+<ul>
+<li><strong>data-bat-percent:</strong> The battery energy level as a percentage value from <strong>0</strong> to <strong>100</strong></li>
+<li><strong>data-bat-level:</strong> A classification of the battery energy level with these values: <strong>full</strong>, <strong>high</strong>, <strong>okay</strong>,
+<strong>low</strong>, <strong>critical</strong></li>
+<li><strong>data-bat-charge:</strong> Charging state: <strong>charging</strong> or <strong>discharging</strong></li>
+<li><strong>data-bat-time-charging:</strong> A classification of the estimated time to finish the charging: <strong>verylittle</strong>, <strong>little</strong>,
+<strong>normal</strong>, <strong>much</strong>, <strong>verymuch</strong></li>
+<li><strong>data-bat-time-discharging:</strong> A classification of the estimated time until the device may switch off: <strong>verylittle</strong>,
+<strong>little</strong>, <strong>normal</strong>, <strong>much</strong>, <strong>verymuch</strong></li>
+<li><strong>data-bat-rating:</strong> An interpretation of the battery level, discharging time and charging state as a classification:
+<strong>best</strong>, <strong>good</strong>, <strong>mediocre</strong>, <strong>bad</strong>, <strong>worst</strong></li>
+</ul>
+<p><em>Note: <strong>data-bat-time-charging</strong> and <strong>data-bat-time-discharging</strong> may have the value <strong>false</strong> or <strong>Infinity</strong>, if
+time estimation is not possible.</em></p>
+<p>You can use these attributes for <em>JavaScript</em> or <em>CSS</em>.</p>
+<h2 id="scss-css-">SCSS (CSS)</h2>
+<p><code>source/sass/battery.scss</code></p>
+<p>The delivered <em>SCSS</em> file is an example of how you could use the data attributes of the body tag for <em>css</em>.</p>
+<h2 id="javascript">JavaScript</h2>
+<p><code>source/js/app/ioio.api.battery.js</code></p>
+<p>This is the core of the <em>Battery Status Rating System</em>.</p>
+<p>There are certain objects and methods that you can change for your own purposes.</p>
+<h3 id="config">Config</h3>
+<p>The easiest way of customization besides CSS is the configuration object <code>window.batteryStatus.Config</code>:</p>
+<h4 id="energylevel-timelevel-energyrating">EnergyLevel, TimeLevel, EnergyRating</h4>
+<ul>
+<li>You can change the classification names and values of the time, energy and rating levels.</li>
+<li>By default the classification scale of energy level, times and rating is set to five. You can change the scale number,
+but always use the same scale number for each classification. If you want to reduce the scale of energy levels from
+five to three, you also have to reduce the time and rating scale number from five to three.</li>
+<li>The order of the classifications and its scales is important and shouldn&#39;t be changed.</li>
+</ul>
+<h4 id="data">Data</h4>
+<p>The object <code>Data.classification</code> contains the label names for the data attributes of the body tag.</p>
+<p>Here you can change the values of the object only. Don&#39;t change the label names.</p>
+<h3 id="widget">Widget</h3>
+<p>Another easy way to customize the script, is to add widgets into the object <code>window.batteryStatus.Widget</code></p>
+<ol>
+<li>Just add your new widget as a new object.</li>
+<li>Add the function call to update the widget data to the desired event in the event object:
+<code>window.batteryStatus.Event</code></li>
+</ol>
+<h3 id="events">Events</h3>
+<p>Just use the existing event methods in <code>window.batteryStatus.Event</code> to call your own methods.</p>
+<h3 id="views">Views</h3>
+<p>Just use your own views in <code>window.batteryStatus.View</code> by adding new methods or modifying or overwriting existing ones.</p>
+<h3 id="controller">Controller</h3>
+<p>The controller object contains the core methods and is not meant to be changed, except for bug fixes or new features.
+However, do what you think and feel free and encouraged to submit pull requests.</p>
+<h1 id="build-system">Build system</h1>
+<p><strong>Note:</strong> For those, who don&#39;t want to use the build system, I&#39;ve included the directory <code>build</code> into the repository.</p>
+<h2 id="full-setup">Full setup</h2>
+<ol>
+<li>Install <a href="https://nodejs.org/en/">Node.js</a></li>
+<li>Install <a href="http://gulpjs.com/">Gulp.js</a></li>
+<li>Install <a href="http://bower.io/">Bower</a></li>
+<li>Enter <code>npm install</code></li>
+<li>Enter <code>bower install</code></li>
+</ol>
+<h2 id="development-workflow">Development workflow</h2>
+<h3 id="serve-and-watch">Serve and watch</h3>
+<pre><code class="lang-sh">gulp serve
+</code></pre>
+<p>This command builds the project, watches code changes and launches web browser and updates on code changes.</p>
+<h3 id="watch-default-">Watch (Default)</h3>
+<pre><code class="lang-sh">gulp watch
+</code></pre>
+<p>or</p>
+<pre><code class="lang-sh">gulp
+</code></pre>
+<p>This is basically the same as the <code>serve</code> task, but without the web browser launching and updating.</p>
+<h3 id="build">Build</h3>
+<pre><code class="lang-sh">gulp build
+</code></pre>
+<p>This task builds the project without watching and doing anything else afterwards.</p>
+<h1 id="contributing">Contributing</h1>
+<p>You are very welcome to contribute your feedback to this project. The <em>Battery Status API</em> is a draft specification and
+it may change in the future. Additionally the implementations in the web browsers are currently
+<a href="http://caniuse.com/#feat=battery-status">incomplete</a>. Therefore the <em>Battery Status API - Rating System</em> depends highly
+on contributions.</p>
+<p>Be encouraged to ...</p>
+<ul>
+<li>send ideas, thoughts, feedback</li>
+<li>bug reports</li>
+<li>feature requests</li>
+<li>pull requests / merge requests</li>
+</ul>
+<h1 id="license">License</h1>
+<p>MIT licenced</p>
+<p>Copyright (c) 2015 Tamio Patrick Honma, <a href="http://honma.de">http://honma.de</a></p>
+
+    </article>
+  </body>
+</html>
