@@ -3,6 +3,7 @@
 var gulp = require('gulp'),
     jade = require('gulp-jade'),
     sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
     sourcemaps = require('gulp-sourcemaps'),
     gulpCopy = require('gulp-copy'),
     cleanDest = require('gulp-clean-dest'),
@@ -40,32 +41,23 @@ gulp.task('sass', function () {
         .pipe(cleanDest('./build/css'))
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
-        .pipe(sourcemaps.write())
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./build/css'))
 });
 
-gulp.task('watch:jade', function () {
-    var watchJS = gulp.watch('source/jade/**/*.jade', ['templates']);
-    watchJS.on('change', function (event) {
-        console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    });
-});
+gulp.task('default', [
+        'copy:bower',
+        'copy',
+        'templates',
+        'sass'
+    ]
+);
 
-gulp.task('watch:js', function () {
-    var watchJS =
-    watchJS.on('change', function (event) {
-        console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    });
-});
-
-gulp.task('watch:sass', function () {
-    var watchSASS = gulp.watch('source/sass/**/*.scss', ['sass']);
-    watchSASS.on('change', function (event) {
-        console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    });
-});
-
-gulp.task('serve', ['copy:bower', 'copy', 'templates', 'sass'], function () {
+gulp.task('serve', ['default'], function () {
     browserSync({
         notify: false,
         server: {
@@ -79,18 +71,3 @@ gulp.task('serve', ['copy:bower', 'copy', 'templates', 'sass'], function () {
     gulp.watch('source/js/**/*.js', ['copy', reload]);
     gulp.watch('source/sass/**/*.{scss,sass}', ['sass', reload]);
 });
-
-gulp.task('watch', [
-        'watch:jade',
-        'watch:js',
-        'watch:sass'
-    ]
-);
-
-gulp.task('default', [
-        'copy:bower',
-        'copy',
-        'templates',
-        'sass'
-    ]
-);

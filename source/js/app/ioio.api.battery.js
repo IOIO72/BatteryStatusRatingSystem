@@ -306,10 +306,10 @@ window.batteryStatus = {
                 var _percent = batteryStatus.Controller.getEnergyLevelPercentage();
                 $(this.$batteryFillSymbol).html(_percent);
                 $(this.$batteryFillSymbol)
-                    .css('background', '-webkit-linear-gradient(bottom, rgba(120,255,10,1) 0%, rgba(120,200,10,1) ' + _percent + '%, rgba(255,255,255,1) ' + (_percent + 15) + '%, rgba(255,255,255,1) 100%)')
-                    .css('background', '-moz-linear-gradient(bottom, rgba(120,255,10,1) 0%, rgba(120,200,10,1) ' + _percent + '%, rgba(255,255,255,1) ' + (_percent + 15) + '%, rgba(255,255,255,1) 100%)')
-                    .css('background', '-o-linear-gradient(bottom, rgba(120,255,10,1) 0%, rgba(120,200,10,1) ' + _percent + '%, rgba(255,255,255,1) ' + (_percent + 15) + '%, rgba(255,255,255,1) 100%)')
-                    .css('background', 'linear-gradient(bottom, rgba(120,255,10,1) 0%, rgba(120,200,10,1) ' + _percent + '%, rgba(255,255,255,1) ' + (_percent + 15) + '%, rgba(255,255,255,1) 100%)')
+                    .css('background', '-webkit-linear-gradient(to top, rgba(120,255,10,1) 0%, rgba(120,200,10,1) ' + _percent + '%, rgba(255,255,255,1) ' + (_percent + 15) + '%, rgba(255,255,255,1) 100%)')
+                    .css('background', '-moz-linear-gradient(to top, rgba(120,255,10,1) 0%, rgba(120,200,10,1) ' + _percent + '%, rgba(255,255,255,1) ' + (_percent + 15) + '%, rgba(255,255,255,1) 100%)')
+                    .css('background', '-o-linear-gradient(to top, rgba(120,255,10,1) 0%, rgba(120,200,10,1) ' + _percent + '%, rgba(255,255,255,1) ' + (_percent + 15) + '%, rgba(255,255,255,1) 100%)')
+                    .css('background', 'linear-gradient(to top, rgba(120,255,10,1) 0%, rgba(120,200,10,1) ' + _percent + '%, rgba(255,255,255,1) ' + (_percent + 15) + '%, rgba(255,255,255,1) 100%)')
                 ;
             }
         }
