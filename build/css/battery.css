@@ -494,5 +494,7 @@ article.log {
     color: orange; }
   #log .error {
     color: red; }
+  #log .value {
+    text-decoration: underline; }
 
 /*# sourceMappingURL=battery.css.map */

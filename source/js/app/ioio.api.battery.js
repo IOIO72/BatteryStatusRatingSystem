@@ -158,10 +158,10 @@ window.batteryStatus = {
             this.showRating();
         },
         showBatteryChargingTime: function() {
-            this.showLog('Charging time: <u>' + batteryStatus.Controller.getBatteryChargingTime() + '</u> seconds');
+            this.showLog('Charging time: <span class="value">' + batteryStatus.Controller.getBatteryChargingTime() + '</span> seconds');
         },
         showBatteryDischargingTime: function() {
-            this.showLog('Discharging time: <u>' + batteryStatus.Controller.getBatteryDischargingTime() + '</u> seconds');
+            this.showLog('Discharging time: <span class="value">' + batteryStatus.Controller.getBatteryDischargingTime() + '</span> seconds');
         },
         showBatteryChargingTimeLevelName: function() {
             var _chargingtime = batteryStatus.Controller.getBatteryChargingTime();
@@ -180,36 +180,30 @@ window.batteryStatus = {
             this.showTimeLevelName(_dischargingtime);
         },
         showBatteryLevel: function() {
-            this.showLog('Battery level: <u>' + batteryStatus.Controller.getEnergyLevel() + '</u>');
+            this.showLog('Battery level: <span class="value">' + batteryStatus.Controller.getEnergyLevel() + '</span>');
         },
         showBatteryLevelPercentage: function() {
             var _levelpercentage = batteryStatus.Controller.getEnergyLevelPercentage();
             this.$body.attr('data-' + batteryStatus.Config.Data.classification.batterylevelperc, _levelpercentage);
-            this.showLog('Battery level percentage: <u>' + _levelpercentage + '</u> %');
+            this.showLog('Battery level percentage: <span class=value">' + _levelpercentage + '</span> %');
         },
         showBatteryLevelName: function() {
             var _levelname = batteryStatus.Controller.getEnergyLevelName();
             this.$body.attr('data-' + batteryStatus.Config.Data.classification.batterylevel, _levelname);
-            this.showLog('Battery level name: <u>' + _levelname + '</u>');
+            this.showLog('Battery level name: <span class="value">' + _levelname + '</span>');
         },
         showBatteryCharge: function() {
-            this.$body.attr(
-                'data-' + batteryStatus.Config.Data.classification.charging,
-                (batteryStatus.Controller.isBatteryCharging()) ? batteryStatus.Config.BatteryCharge.charging : batteryStatus.Config.BatteryCharge.discharging
-            );
-            if (batteryStatus.Controller.isBatteryCharging()) {
-                this.showLog('Battery charging: <u>' + batteryStatus.Config.BatteryCharge.charging + '</u>');
-            } else {
-                this.showLog('Battery charging: <u>' + batteryStatus.Config.BatteryCharge.discharging + '</u>');
-            }
+            var _chargeState = (batteryStatus.Controller.isBatteryCharging()) ? batteryStatus.Config.BatteryCharge.charging : batteryStatus.Config.BatteryCharge.discharging;
+            this.$body.attr('data-' + batteryStatus.Config.Data.classification.charging, _chargeState);
+            this.showLog('Battery charging: <span class="value">' + _chargeState + '</span>');
         },
         showTimeLevelName: function(timelevel) {
-            this.showLog('Time level name: <u>' + batteryStatus.Controller.getTimeLevelName(timelevel) + '</u>');
+            this.showLog('Time level name: <span class="value"">' + batteryStatus.Controller.getTimeLevelName(timelevel) + '</span>');
         },
         showRating: function() {
             var _rating = batteryStatus.Controller.getRating();
             this.$body.attr('data-' + batteryStatus.Config.Data.classification.rating, _rating);
-            this.showLog('Rating: <u>' + _rating + '</u>');
+            this.showLog('Rating: <span class="value">' + _rating + '</span>');
         }
     },
 
