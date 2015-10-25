@@ -71,19 +71,15 @@ body {
     &[data-bat-percent="#{$i}"] {
       .battery_fill {
         @if ($i > 80) {
-          background-image: linear-gradient(to top, rgba(80,200,10,1) 0%, rgba(80,180,10,1) 0% + $i, rgba(255,255,255,1) 15% + $i, rgba(255,255,255,1) 100%);
-        }
-        @elseif ($i > 50) {
-          background-image: linear-gradient(to top, rgba(120,255,10,1) 0%, rgba(120,200,10,1) 0% + $i, rgba(255,255,255,1) 15% + $i, rgba(255,255,255,1) 100%);
-        }
-        @elseif ($i > 15) {
-          background-image: linear-gradient(to top, rgba(255,255,10,1) 0%, rgba(200,200,10,1) 0% + $i, rgba(255,255,255,1) 15% + $i, rgba(255,255,255,1) 100%);
-        }
-        @elseif ($i > 5) {
-          background-image: linear-gradient(to top, rgba(255,120,10,1) 0%, rgba(200,120,10,1) 0% + $i, rgba(255,255,255,1) 15% + $i, rgba(255,255,255,1) 100%);
-        }
-        @else {
-          background-image: linear-gradient(to top, rgba(255,80,10,1) 0%, rgba(200,80,10,1) 0% + $i, rgba(255,255,255,1) 15% + $i, rgba(255,255,255,1) 100%);
+          background-image: linear-gradient(to top, rgba(80, 200, 10, 1) 0%, rgba(80, 180, 10, 1) 0% + $i, rgba(255, 255, 255, 1) 15% + $i, rgba(255, 255, 255, 1) 100%);
+        } @else if ($i > 50) {
+          background-image: linear-gradient(to top, rgba(120, 255, 10, 1) 0%, rgba(120, 200, 10, 1) 0% + $i, rgba(255, 255, 255, 1) 15% + $i, rgba(255, 255, 255, 1) 100%);
+        } @else if ($i > 15) {
+          background-image: linear-gradient(to top, rgba(255, 255, 10, 1) 0%, rgba(200, 200, 10, 1) 0% + $i, rgba(255, 255, 255, 1) 15% + $i, rgba(255, 255, 255, 1) 100%);
+        } @else if ($i > 5) {
+          background-image: linear-gradient(to top, rgba(255, 120, 10, 1) 0%, rgba(200, 120, 10, 1) 0% + $i, rgba(255, 255, 255, 1) 15% + $i, rgba(255, 255, 255, 1) 100%);
+        } @else {
+          background-image: linear-gradient(to top, rgba(255, 80, 10, 1) 0%, rgba(200, 80, 10, 1) 0% + $i, rgba(255, 255, 255, 1) 15% + $i, rgba(255, 255, 255, 1) 100%);
         }
         &::after {
           content: '#{$i}';
@@ -133,13 +129,17 @@ body {
   font-size: $batteryWidth;
 }
 
+
+// Log styling and placing
+
 article.log {
   margin-right: 340px;
 }
+
 #log {
   position: fixed;
   margin: 0;
-  width: 300px;
+  width: 280px;
   height: 300px;
   right: 10px;
   top: 10px;
@@ -154,7 +154,7 @@ article.log {
     top: inherit;
     left: inherit;
     overflow: hidden;
-    background-image: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,0) 100%);
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 100%);
   }
   .log {
     color: #0c0;

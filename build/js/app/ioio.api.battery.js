@@ -1,4 +1,4 @@
-// Experimenting on Battery Status API draft specification
+// Rating System for the Battery Status API draft specification
 // https://dvcs.w3.org/hg/dap/raw-file/default/battery/Overview.html
 // Author: Tamio Patrick Honma <tamio@honma.de>
 // Licence: MIT
@@ -9,44 +9,44 @@ window.batteryStatus = {
         // The percentage of the battery energy levels classified by sections.
         // Label names and ranges can be customized.
         EnergyLevel: {
-            critical:	[0		, 0.05], // 0% to 5%
-            low:		[0.06	, 0.15], // 6% to 15%
-            okay:		[0.16	, 0.5], // etc.
-            high:		[0.51	, 0.8],
-            full:		[0.81	, 1]
+            critical:   [0      , 0.05], // 0% to 5%
+            low:        [0.06   , 0.15], // 6% to 15%
+            okay:       [0.16   , 0.5], // etc.
+            high:       [0.51   , 0.8],
+            full:       [0.81   , 1]
         },
 
         // Time level classification for charging and discharging times.
         // Label names and ranges can be customized.
         TimeLevel: {
-            verylittle: [0		, 300], // 0 to 5 minutes (300 seconds)
-            little:		[301	, 1800], // 5.1 to 30 minutes (1800 seconds)
-            normal:		[1801	, 3600], // etc.
-            much:		[3601	, 7200],
-            verymuch:	[7201	, 'Infinity']
+            verylittle: [0      , 300], // 0 to 5 minutes (300 seconds)
+            little:     [301    , 1800], // 5.1 to 30 minutes (1800 seconds)
+            normal:     [1801   , 3600], // etc.
+            much:       [3601   , 7200],
+            verymuch:   [7201   , 'Infinity']
         },
 
         // Rating classification by combinations of energy and time levels from above.
         EnergyRating: {
             best: {
-                EnergyLevels:	['full'],
-                TimeLevels:		['verymuch']
+                EnergyLevels:   ['full'],
+                TimeLevels:	    ['verymuch']
             },
             good: {
-                EnergyLevels:	['high','full'],
-                TimeLevels:		['much','verymuch']
+                EnergyLevels:   ['high','full'],
+                TimeLevels:     ['much','verymuch']
             },
             mediocre: {
-                EnergyLevels:	['okay','high','full'],
-                TimeLevels:		['normal','much','verymuch']
+                EnergyLevels:   ['okay','high','full'],
+                TimeLevels:     ['normal','much','verymuch']
             },
             bad: {
-                EnergyLevels:	['low','okay','high','full'],
-                TimeLevels:		['little','normal','much','verymuch']
+                EnergyLevels:   ['low','okay','high','full'],
+                TimeLevels:     ['little','normal','much','verymuch']
             },
             worst: {
-                EnergyLevels:	['critical','low','okay','high','full'],
-                TimeLevels:		['verylittle','little','normal','much','verymuch']
+                EnergyLevels:   ['critical','low','okay','high','full'],
+                TimeLevels:     ['verylittle','little','normal','much','verymuch']
             }
         },
         DefaultRatingWhileCharging: 'charging',
@@ -60,12 +60,12 @@ window.batteryStatus = {
         // HTML5 data attribute labels
         Data: {
             classification: {
-                batterylevelperc:		'bat-percent',
-                batterylevel: 			'bat-level',
-                timelevelcharging:		'bat-time-charging',
-                timeleveldischarging:	'bat-time-discharging',
-                rating:					'bat-rating',
-                charging:				'bat-charge'
+                batterylevelperc:       'bat-percent',
+                batterylevel:           'bat-level',
+                timelevelcharging:      'bat-time-charging',
+                timeleveldischarging:   'bat-time-discharging',
+                rating:                 'bat-rating',
+                charging:               'bat-charge'
             }
         }
     },
@@ -98,10 +98,10 @@ window.batteryStatus = {
         onBatteryReady: function() {
             batteryStatus.Event.batteryready = true;
             $(batteryStatus.API.batteryAPI)
-                .on('chargingchange', 			batteryStatus.Event.onChargingChange)
-                .on('chargingtimechange', 		batteryStatus.Event.onChargingTimeChange)
+                .on('chargingchange',           batteryStatus.Event.onChargingChange)
+                .on('chargingtimechange',       batteryStatus.Event.onChargingTimeChange)
                 .on('dischargingtimechange',    batteryStatus.Event.onDischargingTimeChange)
-                .on('levelchange', 				batteryStatus.Event.onBatteryLevelChange)
+                .on('levelchange',              batteryStatus.Event.onBatteryLevelChange)
             ;
             batteryStatus.View.showBatteryStatus();
             batteryStatus.Widget.BatterySymbol.update();

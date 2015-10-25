@@ -157,11 +157,11 @@ This task builds the project without watching and doing anything else afterwards
 
 # Demonstration
 
-I wrote an article about this project and the user experience aspects:
-<http://www.honma.de/auf-kurs/2015/10/der-batteriestatus/>
-
 I began coding this script on CodePen. You can see the first version of it there. *Note:* This script may not be the
 recent version: <http://codepen.io/IOIO72/pen/QjOmob/>
+
+I wrote an article in german about this project and the user experience aspects:
+<http://www.honma.de/auf-kurs/2015/10/der-batteriestatus/>
 
 # Contributing
 
