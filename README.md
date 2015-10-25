@@ -54,8 +54,7 @@ The script adds the following HTML 5 data attributes into your body tag:
 * **data-bat-rating:** An interpretation of the battery level, discharging time and charging state as a classification:
   **best**, **good**, **mediocre**, **bad**, **worst**
 
-*Note: **data-bat-time-charging** and **data-bat-time-discharging** may have the value **false** or **Infinity**, if
-time estimation is not possible.*
+*Note: **data-bat-time-charging** and **data-bat-time-discharging** may have the value **false** or **Infinity**, if time estimation is not possible.*
 
 You can use these attributes for *JavaScript* or *CSS*.
 
@@ -155,6 +154,14 @@ gulp build
 ```
 
 This task builds the project without watching and doing anything else afterwards.
+
+# Demonstration
+
+I wrote an article about this project and the user experience aspects:
+<http://www.honma.de/auf-kurs/2015/10/der-batteriestatus/>
+
+I began coding this script on CodePen. You can see the first version of it there. *Note:* This script may not be the
+recent version: <http://codepen.io/IOIO72/pen/QjOmob/>
 
 # Contributing
 
