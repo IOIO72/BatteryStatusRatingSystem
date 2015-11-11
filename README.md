@@ -177,6 +177,12 @@ Be encouraged to ...
 * feature requests
 * pull requests / merge requests
 
+# Get in touch
+
+You can chat with me about this and other projects of me on Slack.
+
+[Join my Slack-Chat](https://tamiohonma.typeform.com/to/z1YOoo)
+
 # License
 
 MIT licenced
